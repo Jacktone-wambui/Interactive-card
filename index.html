@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Interactive card details form</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Space Grotesk', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: absolute;
+}
+
+.left {
+    width: 53%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bg-left {
+    width: 100%;
+    height: 100%;
+    background: url(./images/bg-main-desktop.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: left;
+}
+
+.bg-top-mobile {
+    display: none;
+}
+
+.cards {
+    position: absolute;
+    height: 60%;
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    left: 15%;
+    gap: 1rem;
+}
+
+.front {
+    background: url(./images/bg-card-front.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 25%;
+    width: 100%;
+    height: 100%;
+    isolation: isolate;
+}
+
+.front-content {
+    width: 68%;
+    height: inherit;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-logo {
+    width: 100%;
+    height: 30%;
+    background-image: url(./images/card-logo.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: left center;
+}
+
+.card-text {
+    width: 100%;
+    position: inherit;
+    height: 40%;
+}
+
+.card-number > h1 {
+    font-size: 20px;
+    color: hsl(0, 0%, 100%);
+    font-weight: 500;
+    word-spacing: 2.5px;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.name-and-expirydate {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    bottom: 0;
+    width: 100%;
+}
+
+.name-and-expirydate > p {
+    font-size: 14px;
+    color: hsl(0, 0%, 100%);
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+.card-name-update {
+    margin-right: 20%;
+}
+
+
+.back {
+    background: url(./images/bg-card-back.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+}
+
+.back > p {
+    width: inherit;
+    height: inherit;
+    text-align: right;
+    position: inherit;
+    padding: 88px 42%;
+    color: #fff;
+    font-size: 16px;
+}
+
+.right {
+    width: 47%;
+    height: 100%;
+    display: block;
+    align-items: center;
+    position: relative;
+}
+
+.right-container,
+.hidden-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+
+
+#form {
+    width: 60%;
+    height: 100%;
+    text-transform: uppercase;
+    color: hsl(278, 68%, 11%);
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+}
+
+label {
+    margin: 1.5rem 0 .4rem 0;
+    font-size: 12px;
+}
+
+input {
+    padding: 12px 20px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid hsl(270, 3%, 87%);
+    width: 100%;
+    font-size: 20px;
+}
+
+button {
+    padding: 12px 20px;
+    border-radius: 5px;
+    outline: none;
+    width: 100%;
+    font-size: 20px;
+    margin-top: .5rem;
+}
+
+input:focus {
+    outline: none !important;
+    border: 1px solid hsl(249, 99%, 64%);
+}
+
+::placeholder {
+    color: hsl(279, 6%, 55%);
+    font-size: 20px;
+}
+
+.exp-month-and-year {
+    display: inline-block;
+    margin: .5rem 0 1rem 0;
+}
+
+.exp-date {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 1.3rem 0 0 0;
+}
+
+.deep-exp {
+    width: 50%;
+    text-align: left;
+}
+
+.deep-cvc {
+    width: 48%;
+    text-align: left;
+}
+
+.cvc {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: .5rem;
+}
+
+
+.short3 {
+    width: 50%;
+}
+
+.exp {
+    width: 22%;
+}
+
+.error {
+    border: 1px solid red;
+}
+
+small {
+    margin-top: .2rem;
+    font-size: 11px;
+    text-transform: lowercase;
+    color: hsl(0, 100%, 66%);
+    display: none;
+}
+
+
+.small-text {
+    width: 100%;
+    display: flex;
+}
+
+.exp-month-exp-year {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.exp-month {
+    width: 50%;
+    text-align: left;
+}
+
+.exp-year {
+    width: 50%;
+    text-align: left;
+}
+
+.button {
+    background-color: hsl(278, 68%, 11%);
+    color: hsl(0, 0%, 100%);
+    cursor: pointer;
+    width: 100%;
+}
+
+#done {
+    width: 60%;
+    color: hsl(278, 73%, 32%);
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: center;
+    position: absolute;
+    gap: 1rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.center-img {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.right-container > .hide {
+    display: none;
+}
+
+
+#done > h1 {
+    text-transform: uppercase;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 2px;
+
+}
+
+.refresh {
+    text-decoration: none;
+    color: #fff;
+}
+
+#done > img {
+    width: fit-content;
+}
+
+#complete {
+    width: 100%;
+    background-color: hsl(278, 68%, 11%);
+    color: #fff;
+    font-size: 16px;
+    margin-top: 2rem;
+    cursor: pointer;
+}
+
+.attribution {
+    font-size: 11px;
+    text-align: left;
+    width: 100%;
+}
+
+.attribution a {
+    color: hsl(228, 45%, 44%);
+}
+
+/* ERROR MESSAGES */
+
+.cardNameError {
+    margin-top: .2rem;
+    font-size: 11px;
+    text-transform: lowercase;
+    color: hsl(0, 100%, 66%);
+}
+
+.bg-moblile-left {
+    display: none;
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        height: 100%;
+        overflow-y: scroll;
+    }
+
+    .container {
+        width: 100%;
+        display: block;
+    }
+
+    .left {
+        width: 100%;
+        height: 38%;
+    }
+
+    .bg-left {
+        width: 100%;
+        height: 100%;
+        background: url(./images/bg-main-mobile.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .cards {
+        height: 30%;
+        width: 80%;
+    }
+
+    .front {
+        position: absolute;
+        top: 47%;
+    }
+
+    .front-content {
+        width: 100%;
+        padding: 25px;
+    }
+
+    .card-logo {
+        height: 20%;
+    }
+    
+    .card-text {
+        height: 55%;
+    }
+    
+    .card-number > h1 {
+        font-size: 16px;
+        margin-bottom: .5rem;
+    }
+
+    .back > p {
+        padding: 73px 12%;
+        font-size: 13px;
+    }
+
+    .right {
+        width: 100%;
+        height: 62%;
+    }
+
+    .attribution {
+        width: 100%;
+        text-align: center;
+        margin-top: 3rem;
+    }
+
+    .right-container,
+    .hidden-container {
+        width: 100%;
+        display: flex;
+        align-items: none;
+        justify-content: center;
+        position: relative;
+    }
+
+    #form {
+        width: 90%;
+        height: 100%;
+        margin: 0 auto;
+        position: absolute;
+        top: 0;
+    }
+
+    #done {
+        width: 90%;
+    }
+    .hidden {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .cards {
+        gap: .5rem;
+    }
+    
+    .front-content {
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    .card-logo {
+        width: 100%;
+        height: 20%;
+    }
+    
+    .card-text {
+        width: 100%;
+        position: inherit;
+        height: 50%;
+    }
+    
+    .card-number > h1 {
+        font-size: 12px;
+    }
+    
+    .name-and-expirydate {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        bottom: 0;
+        width: 80%;
+    }
+    
+    .name-and-expirydate > p {
+        font-size: 10px;
+    }
+    
+    .card-name-update {
+        margin-right: 20%;
+    }
+
+    .back > p {
+        padding: 64px 18%;
+        color: #fff;
+        font-size: 12px;
+    }
+
+    #form {
+        width: 80%;
+    }
+    
+    label {
+        margin: .5rem 0 .2rem 0;
+        font-size: 10px;
+    }
+    
+    input {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    
+    button,
+    #complete {
+        padding: 8px;
+        font-size: 14px;
+        margin-top: .3rem;
+    }
+    
+    ::placeholder {
+        font-size: 14px;
+    }
+    
+    .exp-month-and-year {
+        display: inline-block;
+        margin: .2rem 0 .5rem 0;
+    }
+    
+    .exp-date {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin: .5rem 0 0 0;
+    }
+
+    .attribution {
+        font-size: 10px;
+    }
+
+    #done {
+        width: 80%;
+    }
+
+    #done > h1 {
+        font-size: 16px;
+    }
+
+    #done > p {
+        font-size: 12px;
+    }
+    .hidden {
+        display: none;
+    }
+
+    @media only screen and (max-width: 1024px) {
+        .cards {
+            gap: .7rem;
+        }
+        
+        .front-content {
+            width: 100%;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .card-logo {
+            width: 100%;
+            height: 20%;
+        }
+        
+        .card-text {
+            width: 100%;
+            position: inherit;
+            height: 50%;
+        }
+        
+        .card-number > h1 {
+            font-size: 13px;
+        }
+        
+        .name-and-expirydate {
+            width: 80%;
+        }
+        
+        .name-and-expirydate > p {
+            font-size: 10px;
+        }
+        
+        .card-name-update {
+            margin-right: 23%;
+        }
+    
+        .back > p {
+            padding: 64px 18%;
+            color: #fff;
+            font-size: 12px;
+        }
+    
+        #form {
+            width: 80%;
+        }
+        
+        label {
+            margin: .7rem 0 .4rem 0;
+            font-size: 12px;
+        }
+        
+        input {
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+        
+        button,
+        #complete {
+            padding: 8px;
+            font-size: 15px;
+            margin-top: .5rem;
+        }
+        
+        ::placeholder {
+            font-size: 14px;
+        }
+        
+        .exp-month-and-year {
+            display: inline-block;
+            margin: .4rem 0 .7rem 0;
+        }
+        
+        .exp-date {
+            margin: .7rem 0 0 0;
+        }
+    
+        .attribution {
+            font-size: 12px;
+        }
+    
+        #done {
+            width: 80%;
+        }
+    
+        #done > h1 {
+            font-size: 18px;
+        }
+    
+        #done > p {
+            font-size: 14px;
+        }
+        .hidden {
+            display: none;
+        }
+    }
+}
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <section class="left">
+      <div class="bg-left"></div>
+      <div class="cards">
+        <div class="front">
+          <div class="front-content">
+            <div class="card-logo"></div>
+            
+            <div class="card-text">
+              <div class="card-number">
+                <h1 class="card-num-update">
+                  0000 0000 0000 0000
+                </h1>
+                <div class="name-and-expirydate">
+                  <p class="card-name-update">
+                    Jane Appleseed
+                  </p>
+                  <p class="month-and-year">
+                    <span class="card-month-update">
+                      00
+                    </span>
+                    <span>/</span>
+                    <span class="card-year-update">
+                      00
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="back">
+          <p class="cvc-update">
+            000
+          </p>
+        </div>
+      </div>
+    </section>
+    <section class="right">
+      <div class="attribution">
+        
+      </div>
+
+      <div class="right-container">
+
+        <form action="#" id="form" class="form">
+  
+          <label for="card-holder">
+            Cardholder Name
+          </label>
+          <input type="text" required pattern="[A-Za-z]" maxlength="20" id="card-holder" placeholder="e.g. Jane Appleseed">
+          <small class="cardNameError"></small>
+      
+          <label for="card-number">
+            Card Number
+          </label>
+          <input type="text" maxlength="19" required id="card-number" placeholder="e.g. 1234 5678 9123 0000">
+          <small class="cardNumberError"></small>
+      
+          <div class="exp-cvc">
+      
+            <div class="exp-date">
+      
+              <div class="deep-exp">
+                <label for="expiry month and year">
+                  Exp. Date (MM/YY)
+                </label>
+              </div>
+              <div class="deep-cvc">
+                <label for="cvc">
+                  CVC
+                </label>
+              </div>
+      
+            </div>
+            </div>
+      
+            <div class="exp-month-and-year">
+      
+              <div class="cvc">
+      
+                <input type="number" required maxlength="2" placeholder="MM" name="month" id="month" class="short1 exp"
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"/>
+        
+                <input type="number" required maxlength="2" name="year" id="year" placeholder="YY" class="short2 exp"
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"/>
+      
+                <input type="number" maxlength="3" name="cvc" id="cvc" placeholder=" e.g. 123" class="short3" required
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                
+      
+              </div>
+
+              <div class="small-text">
+                <section class="exp-month-exp-year">
+                  <small class="exp-month">can't be blank</small>
+                  <small class="exp-year">can't be blank</small>
+                </section>
+                <small class="cvc-text">can't be blank</small>
+      
+              </div>
+
+            </div>
+  
+            <button id="button" class="button">Confirm</button>
+      
+        </form>
+
+        <section class="hidden-container hidden">
+          <div id="done">
+            <img src="./images/icon-complete.svg" alt="icon-complete">
+            <h1>
+              Thank you!
+            </h1>
+            <p>
+              We've added your card details
+            </p>
+            <button id="complete"><a class="refresh" href="index.html">Continue</a></button>
+          </div>
+        </section>
+
+      </div>
+
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
